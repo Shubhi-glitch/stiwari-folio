@@ -1,0 +1,204 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+
+  --color-violet: var(--violet);
+  --color-sky: var(--sky);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+  NEAR-BLACK + SAGE EMERALD THEME
+  True near-black background, minimal and restrained, with a single
+  muted sage-emerald accent — no other colours in the system.
+  1. --background  true near-black       #0A0A0A
+  2. --card        slightly raised panel #131313
+  3. --primary     sage emerald (the only accent) #3AA876
+  4. --foreground  warm off-white (not stark white)
+*/
+:root {
+  color-scheme: dark;
+
+  --background: #0a0a0a;
+  --foreground: #eae8e2;
+
+  --card: #131313;
+  --card-foreground: #eae8e2;
+
+  --popover: #101010;
+  --popover-foreground: #eae8e2;
+
+  /* the one accent — sage emerald */
+  --primary: #3aa876;
+  --primary-foreground: #0a1310;
+
+  --secondary: #1a1a1a;
+  --secondary-foreground: #eae8e2;
+
+  --muted: #151515;
+  --muted-foreground: #7d7b74;
+
+  --accent: #6bcf9f;
+  --accent-foreground: #0a1310;
+
+  --destructive: oklch(0.62 0.21 20);
+
+  --border: rgba(234, 232, 226, 0.08);
+  --input: rgba(234, 232, 226, 0.12);
+  --ring: #3aa876;
+
+  --violet: #6bcf9f;
+  --sky: #2f8a63;
+
+  --chart-1: #3aa876;
+  --chart-2: #6bcf9f;
+  --chart-3: #2f8a63;
+  --chart-4: #7d7b74;
+  --chart-5: #4d4b46;
+
+  --radius: 0.25rem;
+
+  --sidebar: #101010;
+  --sidebar-foreground: #eae8e2;
+  --sidebar-primary: #3aa876;
+  --sidebar-primary-foreground: #0a1310;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #eae8e2;
+  --sidebar-border: rgba(234, 232, 226, 0.08);
+  --sidebar-ring: #3aa876;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* thin technical grid */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        color-mix(in oklab, var(--foreground) 6%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 28px color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+
+  .ring-glow {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
+      0 0 44px -8px color-mix(in oklab, var(--primary) 45%, transparent);
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+}
+
+/* hide native cursor when custom cursor is active (pointer devices only) */
+@media (hover: hover) and (pointer: fine) {
+  body[data-custom-cursor='true'],
+  body[data-custom-cursor='true'] * {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background: color-mix(in oklab, var(--primary) 40%, transparent);
+  color: var(--foreground);
+}
+
+/* slim scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--primary) 45%, transparent);
+  border-radius: 99px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
